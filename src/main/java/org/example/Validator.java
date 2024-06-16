@@ -1,12 +1,13 @@
+package org.example;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Validator {
 
-    public boolean isValidEmailAddress(String email) {
+    public static boolean isValidEmailAddress(String email) {
         if (email == null || email.isEmpty()) {
             return false;
         }
@@ -47,7 +48,7 @@ public class Validator {
         return true;
     }
 
-    public boolean validatePassword(String password) {
+    public static boolean validatePassword(String password) {
         if (password == null) {
             throw new IllegalArgumentException("Password must not be null");
         }
@@ -79,7 +80,7 @@ public class Validator {
         return hasUppercase && hasLowercase && hasDigit && hasSpecial;
     }
 
-    public boolean isValidPhone(String phone) {
+    public static boolean isValidPhone(String phone) {
 
         if (phone== null || phone.length() != 10 || phone.charAt(0) != '0') {
             return false;
@@ -93,8 +94,7 @@ public class Validator {
 
         return true;
     }
-
-    public boolean validateCreditCard(String creditCard) {
+    public static boolean validateCreditCard(String creditCard) {
         if (creditCard == null) {
             throw new IllegalArgumentException("Credit card number must not be null");
         }
@@ -109,13 +109,13 @@ public class Validator {
         }
         return true;
     }
-    public boolean validatePostalCode(String postalCode) {
+    public static boolean validatePostalCode(String postalCode) {
         if (postalCode == null) {
             throw new IllegalArgumentException("Postal code must not be null");
         }
         // Simplified validation: check if postal code is 5 digits or 9 digits with a hyphen
-        if (postalCode.length() == 5 || postalCode.length() == 10) {
-            if (postalCode.length() == 10 && postalCode.charAt(5) != '-') {
+        if (postalCode.length() == 5 || postalCode.replace(" ", "").length() == 11) {
+            if (postalCode.length() == 11 && postalCode.charAt(5) != '-') {
                 return false;
             }
             for (int i = 0; i < postalCode.length(); i++) {
@@ -128,7 +128,7 @@ public class Validator {
         return false;
     }
 
-    public boolean isValidDateOfBirth(int day, int month, int year) {
+    public static boolean isValidDateOfBirth(int day, int month, int year) {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
 
@@ -158,7 +158,7 @@ public class Validator {
         return true;
     }
 
-    public boolean validateTime(String time) {
+    public static boolean validateTime(String time) {
         if (time == null) {
             throw new IllegalArgumentException("Time must not be null");
         }
@@ -168,6 +168,7 @@ public class Validator {
             return false;
         }
 
+        // Get the hours and minutes
         int hours;
         int minutes;
 
@@ -185,7 +186,7 @@ public class Validator {
         return true;
     }
 
-    public boolean validateIPAddress(String ipAddress) {
+    public static boolean validateIPAddress(String ipAddress) {
         if (ipAddress == null) {
             throw new IllegalArgumentException("IP address must not be null");
         }
@@ -214,7 +215,6 @@ public class Validator {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -226,7 +226,6 @@ public class Validator {
         if (n == 1 || n == 2) {
             return 1;
         }
-
         int prev1 = 1;
         int prev2 = 1;
         int fib = 0;
@@ -260,7 +259,7 @@ public class Validator {
 
     public static boolean isPalindrome(String input) {
         if (input == null) {
-            return false;
+            throw new IllegalArgumentException("Input is null");
         }
 
         int left = 0;
@@ -279,6 +278,10 @@ public class Validator {
     }
 
     public static boolean isPrime(int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Invalid input. n must be a non-negative integer.");
+        }
+
         if (number <= 1) {
             return false;
         }
