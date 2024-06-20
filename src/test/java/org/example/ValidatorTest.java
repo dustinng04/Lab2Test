@@ -3,6 +3,8 @@ package org.example;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -133,15 +135,23 @@ class ValidatorTest {
         assertEquals(2432902008176640000L, validator.factorial(20));
     }
 
-    @Test
-    void isPalindromeTest() {
-        assertAll("validator Check",
-            () -> assertTrue(validator.isPalindrome("abcba")),
-            () -> assertFalse(validator.isPalindrome("abccab")),
-            () -> assertThrows(IllegalArgumentException.class, () -> validator.isPalindrome(null))
-        );
-    }
+    @ParameterizedTest
+    @CsvSource({
+            "abcba, true",
+            "abccab, false",
+            "'null', java.lang.IllegalArgumentException"
+    })
+    void isPalindromeTest(String input, String expected) {
+        Validator validator = new Validator();
 
+        if (expected.equals("java.lang.IllegalArgumentException")) {
+            assertThrows(IllegalArgumentException.class, () -> validator.isPalindrome(null));
+        } else {
+            boolean actual = validator.isPalindrome(input);
+            boolean expectedValue = Boolean.parseBoolean(expected);
+            assertEquals(expectedValue, actual);
+        }
+    }
     @Test
     void isPrimeTest() {
         assertAll("Prime Number Check",
