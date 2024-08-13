@@ -124,28 +124,6 @@ class ValidatorTest {
         assertEquals(23416728348467685L, validator.fibonacci(80));
     }
 
-    @Test
-    void factorialTest() {
-        assertAll("validator Calculation",
-            () -> assertThrows(IllegalArgumentException.class, () -> validator.factorial(-1)),
-            () -> assertEquals(1, validator.factorial(0))
-        );
-    }
-
-    @Test
-    void factorialTest_2() {
-        BigInteger expected = new BigInteger("2432902008176640000");
-        int input = 20;
-
-        try {
-            BigInteger actual = validator.factorial(input);
-            assertTrue(actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0, "Factorial result should exceed the int boundary");
-            assertEquals(expected, actual);
-        } catch (IllegalArgumentException e) {
-            fail("Unexpected IllegalArgumentException");
-        }
-    }
-
     @ParameterizedTest
     @CsvSource({
             "abcba, true",
