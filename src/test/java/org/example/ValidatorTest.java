@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.math.BigInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidatorTest {
@@ -132,7 +134,16 @@ class ValidatorTest {
 
     @Test
     void factorialTest_2() {
-        assertEquals(2432902008176640000L, validator.factorial(20));
+        BigInteger expected = new BigInteger("2432902008176640000");
+        int input = 20;
+
+        try {
+            BigInteger actual = validator.factorial(input);
+            assertTrue(actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0, "Factorial result should exceed the int boundary");
+            assertEquals(expected, actual);
+        } catch (IllegalArgumentException e) {
+            fail("Unexpected IllegalArgumentException");
+        }
     }
 
     @ParameterizedTest

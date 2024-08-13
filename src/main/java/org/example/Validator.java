@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Arrays;
@@ -218,7 +219,7 @@ public class Validator {
         return true;
     }
 
-    public static int fibonacci(int n) {
+    public static long fibonacci(int n) {
         if (n <= 0) {
             throw new IllegalArgumentException("Invalid input. n must be a positive integer.");
         }
@@ -226,12 +227,12 @@ public class Validator {
         if (n == 1 || n == 2) {
             return 1;
         }
-        int prev1 = 1;
-        int prev2 = 1;
-        int fib = 0;
+        long prev1 = 1;
+        long prev2 = 1;
+        long fib = 0;
 
         // Calculate fibonacci
-        for (int i = 3; i <= n; i++) {
+        for (long i = 3; i <= n; i++) {
             fib = prev1 + prev2;
             prev1 = prev2;
             prev2 = fib;
@@ -239,22 +240,21 @@ public class Validator {
 
         return fib;
     }
-    public static int factorial(int n) {
+    public static BigInteger factorial(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("Invalid input. n must be a non-negative integer.");
         }
 
         if (n == 0 || n == 1) {
-            return 1;
+            return BigInteger.ONE;
         }
 
-        int factorial = 1;
-
+        BigInteger result = BigInteger.ONE;
         for (int i = 2; i <= n; i++) {
-            factorial *= i;
+            result = result.multiply(BigInteger.valueOf(i));
         }
 
-        return factorial;
+        return result;
     }
 
     public static boolean isPalindrome(String input) {
